@@ -1,0 +1,22 @@
+// Breakpoints for commonly used devices
+
+@mixin for-phone-only {
+  @media (max-width: 599px) { @content; } // Small phones (up to 599px)
+}
+
+@mixin for-tablet {
+  @media (max-width: 899px) { @content; } // Tablets (up to 899px)
+}
+
+@mixin for-desktop {
+  @media (max-width: 1199px) { @content; } // Desktops (up to 1199px)
+}
+
+
+@mixin for-medium-desktop {
+  @media (max-width: 1440px) { @content; } // Large desktops (up to 1440px)
+}
+
+@mixin for-large-desktop {
+  @media (max-width: 1800px) { @content; } // Large desktops (up to 1800px)
+}
