@@ -1,3 +1,75 @@
-:host {
-  display: block;
+@import '../../../assets/scss/mixins.scss';
+
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, #0a557a, #1dd8b7);
+  padding: 1rem;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 320px;
+  padding: 1.5rem;
+  background: transparent;
+  border-radius: 8px;
+  text-align: center;
+
+  @include for-tablet{
+    max-width: 400px!important;;
+  }
+
+  @include for-desktop{
+    max-width: 500px;
+  }
+
+  h1.logo {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+
+    @include for-tablet{
+      font-size: 4rem!important;;
+    }
+
+    @include for-desktop{
+      font-size: 4.5rem
+    }
+  }
+
+  .form{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+
+  .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+
+  .login-button {
+    width: 100%;
+
+    @include for-tablet{
+      font-size: 1.2rem!important;;
+      width: 55%!important;
+    }
+  }
+
+  .error-style{
+    padding: 12px;
+    background: #ff000096;
+    color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 13px;
+  }
 }
