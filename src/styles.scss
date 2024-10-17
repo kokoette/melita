@@ -15,6 +15,7 @@ $melita-theme: mat.define-theme((
     theme-type: light,
     primary: mat.$azure-palette,
     tertiary: mat.$blue-palette,
+    // warn: red
   ),
   density: (
     scale: 0,
@@ -46,3 +47,8 @@ body { margin: 0; font-family:'Mulish', sans-serif }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre {
+//   margin: revert;
+//   font-size: revert;
+//   font-weight: revert;
+// }

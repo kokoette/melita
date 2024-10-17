@@ -11,7 +11,6 @@ export class AuthService {
   private httpClient = inject(HttpClient);
   private baseUrl: string = environment.baseUrl
 
-
   authenticateUser(payload:loginPayload) {
     return this.httpClient.post<loginResponse>(`${this.baseUrl}/login`, payload)
   }

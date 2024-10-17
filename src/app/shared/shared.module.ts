@@ -10,6 +10,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FirstWordPipe } from '../core/pipes/get-first-word.pipe';
+import { OfferStatusPipe } from '../core/pipes/offer-status.pipe';
 
 const MODULES = [
   RouterOutlet,
@@ -27,11 +29,16 @@ const MODULES = [
   MatInputModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
+]
 
+const PIPES = [
+  OfferStatusPipe,
+  FirstWordPipe
 ]
 
 @NgModule({
-    imports: [...MODULES],
-    exports: [...MODULES],
+  // Easier approach to reduce redundancy
+  imports: [...PIPES, ...MODULES],
+  exports: [...PIPES, ...MODULES],
 })
 export class SharedModule {}

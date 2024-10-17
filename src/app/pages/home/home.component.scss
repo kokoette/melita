@@ -1,3 +1,92 @@
-:host {
-  display: block;
+@import '../../../assets/scss/mixins.scss';
+@import '../../../assets/scss/variables.scss';
+
+
+//Mobile first
+.offers-container {
+  text-align: center;
+  padding: 20px;
+
+  .title{
+    font-weight: 500;
+    font-size: 24px;
+    margin: 30px auto 10px;
+
+    @include for-medium-desktop{
+      font-size: 30px;
+      font-weight: 600;
+    }
+  }
+  .subtitle{
+    font-size: 15px;
+    @include for-medium-desktop{
+      font-size: 17px;
+    }
+  }
+}
+
+.offers-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  margin-top: 20px;
+
+  @include for-medium-desktop{
+    justify-content: center;
+  }
+
+  .offer-card {
+    background-color: $primary-color; /* Blue */
+    color: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+    flex: 0 0 auto;
+    width: 250px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    /* animation: slideIn 0.5s ease-in-out; */
+
+    .offer-title{
+      font-size: 18px;
+      font-weight: 500;
+      margin: 30px auto 0;
+
+      @include for-medium-desktop{
+        font-size: 22px;
+        font-weight: 600;
+      }
+    }
+
+    .label {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      padding: 5px 16px;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 14px;
+    }
+  }
+}
+
+/* For  auto scroll but disabled for now */
+@keyframes autoScroll {
+  0% {
+      transform: translateX(0);
+  }
+  100% {
+      transform: translateX(-100%); /* Scroll through all offers */
+  }
+}
+
+@keyframes slideIn {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
 }
