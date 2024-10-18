@@ -60,7 +60,7 @@ export class SubscriptionComponent {
     )
     .subscribe({
       next: (res:any) => {
-        this.subscriptions = res.subscriptions;
+        this.subscriptions = this.sortSubscriptions(res.subscriptions)
         console.log('sub', this.subscriptions);
       },
       error: (err) => {
@@ -69,15 +69,25 @@ export class SubscriptionComponent {
     });
   }
 
-  visibleUsage = new Set<number>();
-
-  toggleUsage(cardId: number) {
-    if (this.visibleUsage.has(cardId)) {
-      this.visibleUsage.delete(cardId);
-    } else {
-      this.visibleUsage.add(cardId);
-    }
+  sortSubscriptions(data:subscription[]):subscription[] {
+    return data.sort((a, b) => {
+      const nameComparison = a.name.localeCompare(b.name);
+      if (nameComparison === 0) {
+        // If names are the same, compare by 'line'
+        return a.line - b.line;
+      }
+      return nameComparison;
+    });
   }
+
+
+  // toggleUsage(cardId: number) {
+  //   if (this.visibleUsage.has(cardId)) {
+  //     this.visibleUsage.delete(cardId);
+  //   } else {
+  //     this.visibleUsage.add(cardId);
+  //   }
+  // }
 
   // Utility method to provide different icons
   getIcon(type: string) {

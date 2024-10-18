@@ -16,7 +16,7 @@ import { AuthActions } from '../../store/actions/auth.actions';
       <span class="flex items-center cursor-pointer">
         <img src="picture1.png" alt="" class="h-12 w-12 mx-3 rounded-full">
       </span>
-      <button mat-button color="tertiary" class="font-medium !border-blue" (click)="onLogout()"> <mat-icon>logout</mat-icon>  Logout</button>
+      <button mat-button class="font-medium !text-[red]" (click)="onLogout()"> <mat-icon>logout</mat-icon>  Logout</button>
     </div>
   </div>
   `,
