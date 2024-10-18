@@ -43,7 +43,6 @@ export class SubscriptionComponent {
     this.error = null
     this.apiService.getSubscriptionById(this.data.id).pipe(
       catchError((err) => {
-        // Customize the error message based on the type of error
         if (err.status === 0) {
           // Network error or server is down
           this.error = 'Network error: Please check your internet connection.';
