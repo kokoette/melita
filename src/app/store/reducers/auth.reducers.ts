@@ -6,6 +6,7 @@ export interface AuthState {
   token: string | null;
   error: string | null;
   loading:boolean;
+  logoutLoading:boolean,
   isAuthenticated: boolean;
 }
 
@@ -14,6 +15,7 @@ export const initialState: AuthState = {
   error: null,
   loading:false,
   isAuthenticated: false,
+  logoutLoading:false,
 };
 
 export const authReducer = createReducer(
@@ -45,17 +47,21 @@ export const authReducer = createReducer(
     token: null,
     isAuthenticated: false,
     loading: false,
+    logoutLoading:true,
     error: null,
   })),
 
   on(AuthActions.logoutSuccess, (state) => ({
     ...state,
     error: null,
+    logoutLoading:false
+
   })),
 
   on(AuthActions.logoutFailure, (state, { error }) => ({
     ...state,
     error,
+    logoutLoading:false
   }))
 
 )

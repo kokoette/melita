@@ -19,6 +19,11 @@ export interface subscription{
   usage?: usage[]
 }
 
+export interface subscriptionResponse{
+  subscriptions: subscription[],
+  status:0
+}
+
 export interface usage{
     type: string,
     used: number,

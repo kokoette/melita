@@ -21,6 +21,11 @@ export const selectAuthLoading = createSelector(
   (state: AuthState) => state.loading
 );
 
+export const selectLogoutLoading = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.logoutLoading
+);
+
 export const selectAuthError = createSelector(
   selectAuthState,
   (state: AuthState) => state.error

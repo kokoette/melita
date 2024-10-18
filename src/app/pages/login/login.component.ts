@@ -25,7 +25,6 @@ export class LoginComponent {
   error$;
   isAuthenticated$;
   loading$;
-
   store = inject(Store)
   hide = true;
 
@@ -47,9 +46,11 @@ export class LoginComponent {
     this.loading$ = this.store.select(selectAuthLoading)
   }
 
+  // Password visibiility toggle
   togglePasswordVisibility() {
     this.hide = !this.hide;
   }
+
 
   get emailFormControl():FormControl {
     return this.loginForm.get('email') as FormControl;
@@ -58,6 +59,7 @@ export class LoginComponent {
   get passwordFormControl() {
     return this.loginForm.get('password') as FormControl;
   }
+
   submitForm(){
     this.store.dispatch(AuthActions.login(this.loginForm.value));
   }

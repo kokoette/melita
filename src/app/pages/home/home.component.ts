@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../core/services/api.services';
-import { offer } from '../../core/models/offer.models';
-import { Subject, timer, takeUntil, switchMap, tap, finalize, catchError, of } from 'rxjs';
+import { offer, offersResponse } from '../../core/models/offer.models';
+import { Subject, timer, takeUntil, switchMap, tap, finalize} from 'rxjs';
 import { HeaderComponent } from '../../layout/header/header.component';
 import { SubscriptionComponent } from '../subscription/subscription.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
 
   store = inject(Store)
   router = inject(Router)
@@ -44,29 +44,16 @@ export class HomeComponent {
 
     this.error = null
     this.apiService.getOffers().pipe(
-      catchError((err) => {
-        // Customize the error message based on the type of error
-        if (err.status === 0) {
-          // Network error or server is down
-          this.error = 'Network error: Please check your internet connection.';
-        } else if (err.status === 404) {
-          this.error = 'Offers not found.';
-        } else {
-          this.error = 'An unexpected error occurred. Please try again later.';
-        }
-
-        return of([]); // Return an empty array to keep the UI functional
-      }),
       finalize(() => {
         this.loading = false;
       })
     )
     .subscribe({
-      next: (res:any) => {
+      next: (res:offersResponse) => {
         this.offers = this.sortOffer(res.offers);
-        console.log('offers', this.offers);
       },
       error: (err) => {
+        this.error = err
         console.error('Error fetching offers:', err);
       }
     });
@@ -83,8 +70,8 @@ export class HomeComponent {
     this.router.navigateByUrl(`/subscription/${id}`)
   }
 
-  trackById(index: number, offers: any) {
-    return offers.id
+  trackById(index: number, offer: offer) {
+    return offer.id
   }
 
   sortOffer(data: offer[]): offer[] {

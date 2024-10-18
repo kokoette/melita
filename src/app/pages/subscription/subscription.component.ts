@@ -1,11 +1,11 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject, OnInit, inject } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { catchError, finalize, of } from 'rxjs';
+import { finalize } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../core/services/api.services';
-import { offer, subscription } from '../../core/models/offer.models';
+import { offer, subscription, subscriptionResponse } from '../../core/models/offer.models';
 
 @Component({
   selector: 'app-subscription',
@@ -15,11 +15,11 @@ import { offer, subscription } from '../../core/models/offer.models';
   templateUrl: './subscription.component.html',
   styleUrl: './subscription.component.scss',
 })
-export class SubscriptionComponent {
+export class SubscriptionComponent implements OnInit{
 
 
   dialogRef = inject(MatDialogRef<SubscriptionComponent>)
-  loading: boolean = false;
+  loading = false;
   error: string | null = null;
   subscriptions: subscription[] = [];
 
@@ -32,7 +32,7 @@ export class SubscriptionComponent {
   apiService = inject(AuthService)
   route = inject(ActivatedRoute)
 
-  isLoading:boolean = false
+  isLoading = false
   ngOnInit(){
     this.getSubscription()
   }
@@ -42,29 +42,17 @@ export class SubscriptionComponent {
 
     this.error = null
     this.apiService.getSubscriptionById(this.data.id).pipe(
-      catchError((err) => {
-        if (err.status === 0) {
-          // Network error or server is down
-          this.error = 'Network error: Please check your internet connection.';
-        } else if (err.status === 404) {
-          this.error = 'Subscriptions not found.';
-        } else {
-          this.error = 'An unexpected error occurred. Please try again later.';
-        }
-
-        return of([]);
-      }),
       finalize(() => {
         this.loading = false;
       })
     )
     .subscribe({
-      next: (res:any) => {
+      next: (res:subscriptionResponse) => {
         this.subscriptions = this.sortSubscriptions(res.subscriptions)
-        console.log('sub', this.subscriptions);
       },
       error: (err) => {
-        console.error('Error fetching offers:', err);
+        this.error = err
+        console.error('Error fetching Subscriptions:', err);
       }
     });
   }
@@ -78,31 +66,6 @@ export class SubscriptionComponent {
       }
       return nameComparison;
     });
-  }
-
-
-  // toggleUsage(cardId: number) {
-  //   if (this.visibleUsage.has(cardId)) {
-  //     this.visibleUsage.delete(cardId);
-  //   } else {
-  //     this.visibleUsage.add(cardId);
-  //   }
-  // }
-
-  // Utility method to provide different icons
-  getIcon(type: string) {
-    switch (type) {
-      case 'MOBILE':
-        return 'assets/icons/mobile-icon.svg';
-      case 'TELEVISION':
-        return 'assets/icons/tv-icon.svg';
-      case 'INTERNET':
-        return 'assets/icons/internet-icon.svg';
-      case 'TELEPHONY':
-        return 'assets/icons/phone-icon.svg';
-      default:
-        return 'assets/icons/default-icon.svg';
-    }
   }
 
   onClose(): void {

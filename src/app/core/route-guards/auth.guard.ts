@@ -6,10 +6,8 @@ export const authGuard: CanActivateFn = (route, state) => {
   const isAuthenticated = localStorage.getItem('token')
 
   if(isAuthenticated !== null) {
-    console.log('authorized access');
     return true;
   }
-  console.log('unauthorized access');
   router.navigateByUrl('/auth')
   return false;
 };
