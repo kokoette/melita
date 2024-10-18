@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:9999',
+  baseUrl: 'https://melita-node-1.onrender.com'
 }
