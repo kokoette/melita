@@ -10,3 +10,17 @@ export interface offer{
   contractStartDate: string,
   contractEndDate: string
 }
+
+export interface subscription{
+  id: number,
+  name: string,
+  type: string,
+  line: number,
+  usage?: usage[]
+}
+
+export interface usage{
+    type: string,
+    used: number,
+    limit: number
+}

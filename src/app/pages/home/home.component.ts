@@ -6,11 +6,13 @@ import { AuthService } from '../../core/services/api.services';
 import { offer } from '../../core/models/offer.models';
 import { Subject, timer, takeUntil, switchMap, tap, finalize, catchError, of } from 'rxjs';
 import { HeaderComponent } from '../../layout/header/header.component';
+import { SubscriptionComponent } from '../subscription/subscription.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, SharedModule],
+  imports: [HeaderComponent, SubscriptionComponent, SharedModule],
 
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -19,8 +21,10 @@ export class HomeComponent {
 
   store = inject(Store)
   router = inject(Router)
-  api = inject(AuthService)
-  offers: any;
+  apiService = inject(AuthService)
+  dialog = inject(MatDialog)
+
+  offers: offer[] = [];
 
   countdownSeconds = 10;
   countdownMessage = '';
@@ -39,7 +43,7 @@ export class HomeComponent {
     this.loading = true;
 
     this.error = null
-    this.api.getOffers().pipe(
+    this.apiService.getOffers().pipe(
       catchError((err) => {
         // Customize the error message based on the type of error
         if (err.status === 0) {
@@ -65,6 +69,13 @@ export class HomeComponent {
       error: (err) => {
         console.error('Error fetching offers:', err);
       }
+    });
+  }
+
+  openPopup(offer:offer): void {
+    this.dialog.open(SubscriptionComponent, {
+      width: '100vh',
+      data: offer
     });
   }
 

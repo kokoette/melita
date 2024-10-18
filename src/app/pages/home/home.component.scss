@@ -1,8 +1,8 @@
 @import '../../../assets/scss/mixins.scss';
 @import '../../../assets/scss/variables.scss';
 
+//Mobile first design
 
-//Mobile first
 .offers-container {
   text-align: center;
   padding: 20px;
@@ -12,14 +12,19 @@
     font-size: 24px;
     margin: 30px auto 10px;
 
-    @include for-medium-desktop{
+    @media (min-width: 1440px) {
       font-size: 30px;
       font-weight: 600;
     }
+    // @include for-medium-desktop{
+    //   font-size: 30px;
+    //   font-weight: 600;
+    // }
   }
   .subtitle{
     font-size: 15px;
-    @include for-medium-desktop{
+
+    @media (min-width: 1440px) {
       font-size: 17px;
     }
   }

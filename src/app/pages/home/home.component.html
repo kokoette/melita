@@ -20,17 +20,17 @@
         <div class="label bg-gray-300 h-6 w-20 mb-4 rounded"></div>
         <div class="offer-title bg-gray-300 h-8 w-32 mb-4 rounded"></div>
         <div class="features bg-gray-300 h-40 w-full rounded"></div>
-        <div class="stroke-button bg-gray-300 h-10 w-full mt-4 rounded"></div>
+        <div class="stroke-button bg-gray-300 h-10 w-[60%] mt-4 rounded-full"></div>
       </div>
     </div>
   </ng-container>
 
   <ng-template #offersContent>
-    <ng-container *ngIf="offers?.length > 0 && !error; else noOffersOrError">
+    <ng-container *ngIf="offers.length > 0 && !error; else noOffersOrError">
       <div class="offers-scroll">
         <div class="offer-card" *ngFor="let offer of offers; trackBy: trackById">
           <span class="label">{{offer.name | firstWord}}</span>
-          <div class="flex flex-col justify-evenly">
+          <div class="flex flex-col justify-evenly items-center">
             <div>
               <h2 class="offer-title">{{offer.name}}</h2>
             </div>
@@ -39,7 +39,7 @@
               <span> {{offer | offerStatus}}</span>
             </div>
 
-            <button class="stroke-button" (click)="navigateToSubscription(offer.id)">View Subscription</button>
+            <button class="stroke-button rounded-full text-sm hover:bg-green-light transition-all bg-green shadow-md border-none" (click)="openPopup(offer)">View Subscription</button>
           </div>
 
         </div>

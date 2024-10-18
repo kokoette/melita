@@ -1,3 +1,78 @@
-<p>subscription works!</p>,
+<h1 mat-dialog-title class="mb-2 !pb-0">{{data.name}}</h1>
+<div mat-dialog-content class="mb-4">
+  <p class="text-base mb-4">Subscriptions - <span [ngClass]="{'text-[red]': (data | offerStatus) === 'Expired' }">
+    </span>{{data | offerStatus}}
+  </p>
+</div>
 
-<button routerLink="home">Home</button>
+<hr>
+
+<div class="grid-container">
+  <ng-container *ngIf="loading && !error; else noOffersOrError">
+    <div class="skeleton-card skeleton" *ngFor="let n of [1,2,3,4]">
+      <div class="skeleton-icon skeleton"></div>
+      <div class="skeleton-text skeleton"></div>
+      <div class="skeleton-text skeleton" style="width: 60%"></div>
+    </div>
+  </ng-container>
+
+  <ng-template #subCards>
+    <ng-container  *ngIf="subscriptions.length > 0 && !error; else noOffersOrError">
+  <div class="card" *ngFor="let subscription of subscriptions">
+    <div class="card-header">
+      <div [ngSwitch]="subscription.type" class="text-center">
+        <div *ngSwitchCase="'INTERNET'" class=" bg-blue icon-container">
+          <mat-icon>language</mat-icon>
+        </div>
+        <div *ngSwitchCase="'TELEPHONY'" class="bg-green icon-container">
+          <mat-icon>call</mat-icon>
+        </div>
+        <div *ngSwitchCase="'MOBILE'" class="bg-pink icon-container">
+          <mat-icon>phone_iphone</mat-icon>
+        </div>
+        <div *ngSwitchCase="'TELEVISION'" class="bg-blue icon-container">
+          <mat-icon>desktop_windows</mat-icon>
+        </div>
+        <div *ngSwitchDefault>
+          <mat-icon>world</mat-icon>
+        </div>
+      </div>
+      <div>
+        <h3>{{ subscription.name }}</h3>
+
+        <div class="usage-details">
+          <div *ngFor="let usage of subscription.usage">
+            <p>{{ usage.type }}: {{ usage.used }} / {{ usage.limit }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+</ng-template>
+
+<!-- Fallback when no offers are available -->
+<ng-template #noOffersOrError>
+  <ng-container *ngIf="!error; else errorTemplate">
+    <!-- No Offers -->
+    <div class="text-center flex flex-col items-center mt-[5vh] justify-center text-sm text-gray-500">
+      <img src="empty-box.png" width="80" alt="empty">
+      Sorry, no subscriptions are available at the moment.
+    </div>
+  </ng-container>
+
+  <!-- Error State -->
+  <ng-template #errorTemplate>
+    <div class="text-center flex flex-col items-center mt-[5vh] justify-center text-sm text-gray-500">
+      <img src="error-state.png" width="80" alt="error-state">
+      {{error}}
+    </div>
+  </ng-template>
+</ng-template>
+
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Close</button>
+</div>

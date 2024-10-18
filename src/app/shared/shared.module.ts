@@ -12,6 +12,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FirstWordPipe } from '../core/pipes/get-first-word.pipe';
 import { OfferStatusPipe } from '../core/pipes/offer-status.pipe';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const MODULES = [
   RouterOutlet,
@@ -29,6 +30,7 @@ const MODULES = [
   MatInputModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
+  MatDialogModule
 ]
 
 const PIPES = [
