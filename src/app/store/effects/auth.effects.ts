@@ -19,17 +19,7 @@ export class AuthEffects {
         this.authService.authenticateUser({username: action.username, password: action.password}).pipe(
           map(response => AuthActions.loginSuccess({ user: response })),
           catchError(error => {
-            let errorMessage = 'Login failed. Please try again.';
-
-            if (error.status === 400) {
-              errorMessage = 'Invalid email or password';
-            } else if (error.status >= 500) {
-              errorMessage = 'Server error, please try again later.';
-            }
-
-            console.error('Login Error:', error); // for debugging
-
-            return of(AuthActions.loginFailure({ error: errorMessage }));
+            return of(AuthActions.loginFailure({ error: error }));
           })
         )
       ),

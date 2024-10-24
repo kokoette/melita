@@ -16,12 +16,12 @@ export class AuthService {
 
   authenticateUser(payload:loginPayload) {
     return this.httpClient.post<loginResponse>(`${this.baseUrl}/login`, payload)
-    // .pipe(catchError(this.errorHandler.errorHandler));
+    .pipe(catchError(this.errorHandler.errorHandler));
   }
 
   logOutUser(){
     return this.httpClient.get<logoutResponse>(`${this.baseUrl}/logout`)
-    // .pipe(catchError(this.errorHandler.errorHandler));
+    .pipe(catchError(this.errorHandler.errorHandler));
 
   }
 
